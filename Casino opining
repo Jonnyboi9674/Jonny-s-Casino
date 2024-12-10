@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Casino Game</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(45deg, #222, #444);
+            overflow: hidden;
+            color: white;
+            text-align: center;
+        }
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            height: 100vh;
+        }
+        .game {
+            border: 5px solid gold;
+            padding: 20px;
+            margin: 10px;
+            width: 300px;
+            height: 200px;
+            cursor: pointer;
+            background: #222;
+            box-shadow: 0 0 10px gold;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .game:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 20px red;
+        }
+        .game h2 {
+            margin: 0;
+            font-size: 24px;
+            color: gold;
+        }
+        #gameModal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80%;
+            height: 80%;
+            background: #333;
+            color: white;
+            display: none;
+            z-index: 1000;
+            box-shadow: 0 0 20px gold;
+            border: 5px solid gold;
+        }
+        #closeModal {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 20px;
+            cursor: pointer;
+            color: red;
+        }
+        #gameContent {
+            height: calc(100% - 40px);
+            overflow-y: auto;
+            padding: 20px;
+        }
+        #overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            z-index: 999;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="game" id="slotMachine">
+            <h2>Slot Machine</h2>
+        </div>
+        <div class="game" id="blackjack">
+            <h2>Blackjack</h2>
+        </div>
+        <div class="game" id="craps">
+            <h2>Craps</h2>
+        </div>
+        <div class="game" id="plinko">
+            <h2>Plinko</h2>
+        </div>
+        <div class="game" id="roulette">
+            <h2>Roulette</h2>
+        </div>
+    </div>
+
+    <div id="overlay"></div>
+    <div id="gameModal">
+        <span id="closeModal">&times;</span>
+        <div id="gameContent">
+            <h2>Game Content</h2>
+        </div>
+    </div>
+
+    <script>
+        // Flashy entrance animations
+        const games = document.querySelectorAll('.game');
+        const modal = document.getElementById('gameModal');
+        const overlay = document.getElementById('overlay');
+        const closeModal = document.getElementById('closeModal');
+        const gameContent = document.getElementById('gameContent');
+
+        games.forEach((game, index) => {
+            game.style.opacity = 0;
+            game.style.transform = 'translateY(-50px)';
+            setTimeout(() => {
+                game.style.transition = 'all 0.5s';
+                game.style.opacity = 1;
+                game.style.transform = 'translateY(0)';
+            }, index * 200);
+        });
+
+        const loadGame = (gameName) => {
+            modal.style.display = 'block';
+            overlay.style.display = 'block';
+            gameContent.innerHTML = `<h2>${gameName} Game</h2><p>Game logic coming soon!</p>`;
+        };
+
+        closeModal.onclick = () => {
+            modal.style.display = 'none';
+            overlay.style.display = 'none';
+        };
+
+        document.getElementById('slotMachine').onclick = () => loadGame('Slot Machine');
+        document.getElementById('blackjack').onclick = () => loadGame('Blackjack');
+        document.getElementById('craps').onclick = () => loadGame('Craps');
+        document.getElementById('plinko').onclick = () => loadGame('Plinko');
+        document.getElementById('roulette').onclick = () => loadGame('Roulette');
+    </script>
+</body>
+</html>
